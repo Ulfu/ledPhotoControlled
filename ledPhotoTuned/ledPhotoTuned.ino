@@ -30,8 +30,10 @@ void setup() {
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
-  pinMode(photoResistor, INPUT_PULLUP);
+  pinMode(photoResistor, INPUT);
   Serial.begin(9600);
+  maxValue = analogRead(photoResistor);
+  minValue = maxValue;
 }
 
 void loop() {
@@ -45,6 +47,7 @@ void loop() {
       maxValue = photoValue;
     }
   }
+  photoValue = constrain(photoValue, minValue, maxValue)
   ledValue = map((photoValue), minValue, maxValue, 0, 255); //Copy value to the variable
   analogWrite(ledPin, ledValue); //Write the values
   Serial.println(ledValue+ minValue + " max: " + maxValue); //Pause the program for ledBlinkTime
